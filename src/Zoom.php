@@ -10,11 +10,15 @@ class Zoom
 {
     protected $client;
 
-    public function __construct($type = 'Private')
+    public function __construct($type = 'Private', $token = null)
     {
         $function = 'boot'.ucfirst($type).'Application';
         if (method_exists($this, $function)) {
-            $this->$function();
+            if (ucfirst($type) == 'Public') {
+                $this->$function($token);
+            } else {
+                $this->$function();
+            }
         } else {
             throw new Exception('Application Interface type not known');
         }

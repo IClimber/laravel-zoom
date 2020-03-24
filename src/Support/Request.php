@@ -15,7 +15,22 @@ class Request
         $options = [
             'base_uri' => 'https://api.zoom.us/v2/',
             'headers' => [
-                'Authorization' => 'Bearer '.$this->generateJWT(),
+                'Authorization' => 'Bearer ' . $this->generateJWT(),
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json',
+            ],
+        ];
+        $this->client = new Client($options);
+
+        return $this;
+    }
+
+    public function bootPublicApplication(string $token)
+    {
+        $options = [
+            'base_uri' => 'https://api.zoom.us/v2/',
+            'headers' => [
+                'Authorization' => 'Bearer ' . $token,
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
             ],

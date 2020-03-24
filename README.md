@@ -12,7 +12,7 @@ Package to manage the Zoom API in Laravel
 You can install the package via composer:
 
 ```bash
-composer require macsidigital/laravel-zoom
+composer require iclimber/laravel-zoom
 ```
 
 The service provider should automatically register for For Laravel > 5.4.
