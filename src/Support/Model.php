@@ -151,14 +151,15 @@ abstract class Model
         if ($this->attributeExists($key)) {
             if ($this->isRelationshipAttribute($key)) {
                 $class = new $this->relationships[$key];
-                if (is_array($value) && in_array($class->getKey(), $value)) {
+                if (is_array($value) && array_key_exists($class->getKey(), $value)) {
                     $class->fill($value);
                     $this->attributes[$key] = $class;
                 } elseif (is_array($value)) {
-                    foreach ($value as $index => $class) {
-                        $new_class = new $this->relationships[$key];
-                        $new_class->fill($class);
-                        $this->attributes[$key][$index] = $new_class;
+                    foreach ($value as $index => $value1) {
+                        //$new_class = new $this->relationships[$key];
+                        //$new_class->fill($value);
+                        //$this->attributes[$key][$index] = $new_class;
+                        $this->attributes[$key][$index] = $value1;
                     }
                 } else {
                     $this->attributes[$key] = $value;
