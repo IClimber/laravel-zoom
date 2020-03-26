@@ -1,11 +1,11 @@
 <?php
 
-namespace MacsiDigital\Zoom;
+namespace IClimber\Zoom;
 
 use Exception;
 use Illuminate\Support\Collection;
-use MacsiDigital\Zoom\Exceptions\RequestException;
-use MacsiDigital\Zoom\Support\Model;
+use IClimber\Zoom\Exceptions\RequestException;
+use IClimber\Zoom\Support\Model;
 
 class Registrant extends Model
 {

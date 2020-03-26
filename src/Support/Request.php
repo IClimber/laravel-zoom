@@ -1,6 +1,6 @@
 <?php
 
-namespace MacsiDigital\Zoom\Support;
+namespace IClimber\Zoom\Support;
 
 use Exception;
 use Firebase\JWT\JWT;

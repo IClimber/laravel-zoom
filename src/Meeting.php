@@ -1,11 +1,11 @@
 <?php
 
-namespace MacsiDigital\Zoom;
+namespace IClimber\Zoom;
 
 use Exception;
 use Illuminate\Support\Collection;
-use MacsiDigital\Zoom\Exceptions\RequestException;
-use MacsiDigital\Zoom\Support\Model;
+use IClimber\Zoom\Exceptions\RequestException;
+use IClimber\Zoom\Support\Model;
 
 class Meeting extends Model
 {
@@ -69,9 +69,9 @@ class Meeting extends Model
     ];
 
     protected $relationships = [
-        'settings' => '\MacsiDigital\Zoom\MeetingSetting',
-        'recurrence' => '\MacsiDigital\Zoom\Recurrence',
-        'tracking_fields' => '\MacsiDigital\Zoom\TrackingField',
+        'settings' => MeetingSetting::class,
+        'recurrence' => Recurrence::class,
+        'tracking_fields' => TrackingField::class,
     ];
 
     public function addTrackingField(TrackingField $tracking_field)

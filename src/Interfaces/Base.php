@@ -1,9 +1,9 @@
 <?php
 
-namespace MacsiDigital\Zoom\Interfaces;
+namespace IClimber\Zoom\Interfaces;
 
 use Exception;
-use MacsiDigital\Zoom\Support\Response;
+use IClimber\Zoom\Support\Response;
 
 abstract class Base
 {

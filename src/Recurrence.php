@@ -1,8 +1,8 @@
 <?php
 
-namespace MacsiDigital\Zoom;
+namespace IClimber\Zoom;
 
-use MacsiDigital\Zoom\Support\Model;
+use IClimber\Zoom\Support\Model;
 
 class Recurrence extends Model
 {

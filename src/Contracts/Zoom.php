@@ -1,6 +1,6 @@
 <?php
 
-namespace MacsiDigital\Zoom\Contracts;
+namespace IClimber\Zoom\Contracts;
 
 interface Zoom
 {

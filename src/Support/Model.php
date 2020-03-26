@@ -1,11 +1,11 @@
 <?php
 
-namespace MacsiDigital\Zoom\Support;
+namespace IClimber\Zoom\Support;
 
 use Illuminate\Support\Collection;
-use MacsiDigital\Zoom\Exceptions\RequestException;
-use MacsiDigital\Zoom\Facades\Zoom;
-use MacsiDigital\Zoom\Interfaces\Base;
+use IClimber\Zoom\Exceptions\RequestException;
+use IClimber\Zoom\Facades\Zoom;
+use IClimber\Zoom\Interfaces\Base;
 
 abstract class Model
 {

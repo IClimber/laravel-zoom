@@ -1,8 +1,9 @@
 <?php
 
-namespace MacsiDigital\Zoom;
+namespace IClimber\Zoom;
 
-use MacsiDigital\Zoom\Support\Model;
+use IClimber\Zoom\Exceptions\RequestException;
+use IClimber\Zoom\Support\Model;
 
 class User extends Model
 {
@@ -71,7 +72,7 @@ class User extends Model
     {
         if ($this->hasID()) {
             if (in_array('put', $this->methods)) {
-                $this->response = $this->client->patch("{$this->getEndpoint()}/{$this->getID()}", $this->updateAttributes);
+                $this->response = $this->client->patch("{$this->getEndpoint()}/{$this->getID()}", $this->updateAttributes());
                 if ($this->response->getStatusCode() == 200) {
                     return $this;
                 } else {
@@ -80,7 +81,7 @@ class User extends Model
             }
         } else {
             if (in_array('post', $this->methods)) {
-                $attributes = ['action' => 'create', 'user_info' => $this->createAttributes];
+                $attributes = ['action' => 'create', 'user_info' => $this->createAttributes()];
                 $this->response = $this->client->post($this->getEndpoint(), $attributes);
                 if ($this->response->getStatusCode() == 200) {
                     $this->fill($this->response->getBody());

@@ -1,6 +1,6 @@
 <?php
 
-namespace MacsiDigital\Zoom\Exceptions;
+namespace IClimber\Zoom\Exceptions;
 
 use Exception;
 use Throwable;

@@ -1,15 +1,15 @@
 <?php
 
-namespace MacsiDigital\Zoom;
+namespace IClimber\Zoom;
 
 use Exception;
 use Illuminate\Support\Str;
-use MacsiDigital\Zoom\Interfaces\PrivateApplication;
-use MacsiDigital\Zoom\Interfaces\PublicApplication;
+use IClimber\Zoom\Interfaces\PrivateApplication;
+use IClimber\Zoom\Interfaces\PublicApplication;
 
 /**
  * Class Zoom
- * @package MacsiDigital\Zoom
+ * @package IClimber\Zoom
  *
  * @property-read User $user
  */
@@ -48,7 +48,7 @@ class Zoom
 
     protected function getNode($key)
     {
-        $class = 'MacsiDigital\Zoom\\' . Str::studly($key);
+        $class = 'IClimber\Zoom\\' . Str::studly($key);
         if (class_exists($class)) {
             return new $class($this->client);
         }

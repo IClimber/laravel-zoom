@@ -1,8 +1,8 @@
 {
     "name": "iclimber/laravel-zoom",
     "description": "Laravel Zoom package",
-    "homepage": "https://github.com/MacsiDigital/laravel-zoom",
-    "keywords": ["macsidigital", "laravel-zoom", "zoom", "laravel", "api", "client"],
+    "homepage": "https://github.com/IClimber/laravel-zoom",
+    "keywords": ["macsidigital", "iclimber", "laravel-zoom", "zoom", "laravel", "api", "client"],
     "license": "MIT",
     "type": "library",
     "authors": [
@@ -24,12 +24,12 @@
     },
     "autoload": {
         "psr-4": {
-            "MacsiDigital\\Zoom\\": "src"
+            "IClimber\\Zoom\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "MacsiDigital\\Zoom\\Tests\\": "tests"
+            "IClimber\\Zoom\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -43,10 +43,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "MacsiDigital\\Zoom\\Providers\\ZoomServiceProvider"
+                "IClimber\\Zoom\\Providers\\ZoomServiceProvider"
             ],
             "aliases": {
-                "Zoom": "MacsiDigital\\Zoom\\Facades\\Zoom"
+                "Zoom": "IClimber\\Zoom\\Facades\\Zoom"
             }
         }
     },

@@ -1,8 +1,8 @@
 <?php
 
-namespace MacsiDigital\Zoom\Interfaces;
+namespace IClimber\Zoom\Interfaces;
 
-use MacsiDigital\Zoom\Support\Request;
+use IClimber\Zoom\Support\Request;
 
 class PublicApplication extends Base
 {

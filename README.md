@@ -1,9 +1,9 @@
 # Laravel package for Zoom video conferencing
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/macsidigital/laravel-zoom.svg?style=flat-square)](https://packagist.org/packages/macsidigital/laravel-zoom)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/macsidigital/laravel-zoom.svg?style=flat-square)](https://packagist.org/packages/iclimber/laravel-zoom)
 [![Build Status](https://img.shields.io/travis/macsidigital/laravel-zoom/master.svg?style=flat-square)](https://travis-ci.org/MacsiDigital/laravel-zoom)
 [![StyleCI](https://github.styleci.io/repos/193588988/shield?branch=master)](https://github.styleci.io/repos/193588988)
-[![Total Downloads](https://img.shields.io/packagist/dt/macsidigital/laravel-zoom.svg?style=flat-square)](https://packagist.org/packages/macsidigital/laravel-zoom)
+[![Total Downloads](https://img.shields.io/packagist/dt/macsidigital/laravel-zoom.svg?style=flat-square)](https://packagist.org/packages/iclimber/laravel-zoom)
 
 Package to manage the Zoom API in Laravel
 
@@ -20,7 +20,7 @@ The service provider should automatically register for For Laravel > 5.4.
 For Laravel < 5.5, open config/app.php and, within the providers array, append:
 
 ``` php
-MacsiDigital\Zoom\Providers\ZoomServiceProvider::class
+IClimber\Zoom\Providers\ZoomServiceProvider::class
 ```
 
 ## Configuration file
@@ -28,7 +28,7 @@ MacsiDigital\Zoom\Providers\ZoomServiceProvider::class
 Publish the configuration file
 
 ```bash
-php artisan vendor:publish --provider="MacsiDigital\Zoom\Providers\ZoomServiceProvider"
+php artisan vendor:publish --provider="IClimber\Zoom\Providers\ZoomServiceProvider"
 ```
 
 This will create a zoom/config.php within your config directory, where you add value for api_key and api_secret.
@@ -44,7 +44,7 @@ We use relationships so you will need to check the Zoom API, for example to get 
 So to get a list of meetings
 
 ``` php
-	$zoom = new \MacsiDigital\Zoom\Zoom;
+	$zoom = new \IClimber\Zoom\Zoom;
 	$meetings = $zoom->user->find('test@domain.com')->meetings()->all();
 ```
 
@@ -53,7 +53,7 @@ So to get a list of meetings
 The find all function returns a Laravel Collection so you can use all the Laravel Collection magic
 
 ``` php
-	$zoom = new \MacsiDigital\Zoom\Zoom;
+	$zoom = new \IClimber\Zoom\Zoom;
 	$users = $zoom->user->all();
 ```
 
@@ -62,21 +62,21 @@ The find all function returns a Laravel Collection so you can use all the Larave
 There are very few ocassions in the API where you can filter the results, but where you can you can use the where function.  Again check the API documentation for where you can add a query to the request.  To action you would do like so
 
 ``` php
-    $zoom = new \MacsiDigital\Zoom\Zoom;
+    $zoom = new \IClimber\Zoom\Zoom;
     $thing = $zoom->thing->where('Name', '=', 'Test Name')->get();
 ```
 
 You can also just passs the name and value if it is to equal
 
 ``` php
-    $zoom = new \MacsiDigital\Zoom\Zoom;
+    $zoom = new \IClimber\Zoom\Zoom;
     $thing = $zoom->thing->where('Name', 'Test Name')->get();
 ```
 
 To only get a single item use the 'first' method
 
 ``` php
-    $zoom = new \MacsiDigital\Zoom\Zoom;
+    $zoom = new \IClimber\Zoom\Zoom;
     $thing = $zoom->thing->where('Name', 'Test Name')->first();
 ```
 
@@ -85,7 +85,7 @@ To only get a single item use the 'first' method
 Just like Laravel we can use the 'find' method to return a single matched result on the ID.  For users/registrants/panelists you can also use the email as well as the ID.
 
 ``` php
-	$zoom = new \MacsiDigital\Zoom\Zoom;
+	$zoom = new \IClimber\Zoom\Zoom;
 	$meeting = $zoom->meeting->find('000000000');
 ```
 
