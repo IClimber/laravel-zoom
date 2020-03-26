@@ -11,11 +11,11 @@ class GlobalDialInNumber extends Model
     const KEY_FIELD = 'country';
 
     protected $attributes = [
-        'country' => '', // boolean
-        'country_name' => '', // boolean
-        'city' => '', // boolean
-        'number' => '', // boolean
-        'type' => '', // boolean
+        'country' => null, // boolean
+        'country_name' => null, // boolean
+        'city' => null, // boolean
+        'number' => null, // boolean
+        'type' => null, // boolean
     ];
 
     protected $createAttributes = [

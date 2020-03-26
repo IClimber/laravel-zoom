@@ -107,7 +107,7 @@ class Request
         $return = [];
         if (is_array($fields)) {
             foreach ($fields as $key => $value) {
-                if ($value != [] && $value != '') {
+                if ($value != [] && !is_null($value)) {
                     if (is_array($value)) {
                         foreach ($value as $sub_key => $object) {
                             if (is_object($object)) {

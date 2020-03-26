@@ -11,8 +11,8 @@ class CustomQuestion extends Model
     protected $methods = [];
 
     protected $attributes = [
-        'title' => '', // string
-        'value' => '', // string
+        'title' => null, // string
+        'value' => null, // string
     ];
 
     protected $createAttributes = [

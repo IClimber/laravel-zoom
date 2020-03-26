@@ -19,27 +19,27 @@ class Registrant extends Model
     protected $methods = ['get', 'post', 'patch', 'put', 'delete'];
 
     protected $attributes = [
-        'id' => '', // string
-        'email' => '', // string
-        'first_name' => '', // string
-        'last_name' => '', // string
-        'address' => '', // string
-        'city' => '', // string
-        'country' => '', // string
-        'zip' => '', // string
-        'state' => '', // string
-        'phone' => '', // string
-        'industry' => '', // string
-        'org' => '', // string
-        'job_title' => '', // string
-        'purchasing_time_frame' => '', // string
-        'role_in_purchase_process' => '', // string
-        'no_of_employees' => '', // string
-        'comments' => '', // string
+        'id' => null, // string
+        'email' => null, // string
+        'first_name' => null, // string
+        'last_name' => null, // string
+        'address' => null, // string
+        'city' => null, // string
+        'country' => null, // string
+        'zip' => null, // string
+        'state' => null, // string
+        'phone' => null, // string
+        'industry' => null, // string
+        'org' => null, // string
+        'job_title' => null, // string
+        'purchasing_time_frame' => null, // string
+        'role_in_purchase_process' => null, // string
+        'no_of_employees' => null, // string
+        'comments' => null, // string
         'custom_questions' => [],
-        'status' => '', // string
-        'create_time' => '', // string [date-time]
-        'join_url' => '', // string [string]
+        'status' => null, // string
+        'create_time' => null, // string [date-time]
+        'join_url' => null, // string [string]
     ];
 
     protected $createAttributes = [
@@ -105,7 +105,7 @@ class Registrant extends Model
 
     public function all($fromPage = 1): Collection
     {
-        if ($this->relationshipID != '') {
+        if (!is_null($this->relationshipID)) {
             return $this->collect($this->get("{$this->type}/{$this->relationshipID}/{$this->getEndpoint()}"));
         } else {
             throw new Exception('No Relationship set');

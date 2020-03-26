@@ -12,6 +12,17 @@ use IClimber\Zoom\Interfaces\PublicApplication;
  * @package IClimber\Zoom
  *
  * @property-read User $user
+ * @property-read Meeting $meeting
+ * @property-read MeetingSetting $meetingSetting
+ * @property-read Webinar $webinar
+ * @property-read WebinarSetting $webinarSetting
+ * @property-read Registrant $registrant
+ * @property-read Recurrence $recurrence
+ * @property-read Occurrence $occurrence
+ * @property-read Panelist $panelist
+ * @property-read CustomQuestion $customQuestion
+ * @property-read GlobalDialInNumber $globalDialInNumber
+ * @property-read TrackingField $trackingField
  */
 class Zoom
 {

@@ -11,10 +11,10 @@ class Panelist extends Model
     const KEY_FIELD = 'id';
 
     protected $attributes = [
-        'id' => '', // string
-        'name' => '', // string
-        'email' => '', // string
-        'join_url' => '', // string
+        'id' => null, // string
+        'name' => null, // string
+        'email' => null, // string
+        'join_url' => null, // string
     ];
 
     protected $createAttributes = [

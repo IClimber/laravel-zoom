@@ -11,8 +11,8 @@ class TrackingField extends Model
     const KEY_FIELD = 'field';
 
     protected $attributes = [
-        'field' => '', // boolean
-        'value' => '', // boolean
+        'field' => null, // boolean
+        'value' => null, // boolean
     ];
 
     protected $createAttributes = [

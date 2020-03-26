@@ -9,9 +9,9 @@ class Occurrence extends Model
     const KEY_FIELD = 'occurrence_id';
 
     protected $attributes = [
-        'occurrence_id' => '', // integer
-        'start_time' => '', // string [date-time]
-        'duration' => '', // integer
-        'status' => '', // string
+        'occurrence_id' => null, // integer
+        'start_time' => null, // string [date-time]
+        'duration' => null, // integer
+        'status' => null, // string
     ];
 }

@@ -15,21 +15,21 @@ class Webinar extends Model
 
     protected $methods = ['get', 'post', 'patch', 'put', 'delete'];
 
-    protected $userID;
+    protected $userID = null;
 
     protected $attributes = [
-        'uuid' => '', // string
-        'id' => '', // string
-        'host_id' => '', // string
-        'created_at' => '', // string [date-time]
-        'join_url' => '', // string
-        'topic' => '', // string
-        'type' => '', // integer
-        'start_time' => '', // string [date-time]
-        'duration' => '', // integer
-        'timezone' => '', // string
-        'password' => '', // string
-        'agenda' => '', // string
+        'uuid' => null, // string
+        'id' => null, // string
+        'host_id' => null, // string
+        'created_at' => null, // string [date-time]
+        'join_url' => null, // string
+        'topic' => null, // string
+        'type' => null, // integer
+        'start_time' => null, // string [date-time]
+        'duration' => null, // integer
+        'timezone' => null, // string
+        'password' => null, // string
+        'agenda' => null, // string
         'recurrence' => [],
         'occurrences' => [],
         'settings' => [],
@@ -105,7 +105,7 @@ class Webinar extends Model
     {
         $model = new static($this->client);
         $model->fill($attributes);
-        if (isset($this->userID)) {
+        if (isset($this->userID) && !is_null($this->userID)) {
             $model->setUserID($this->userID);
         }
 
@@ -114,7 +114,7 @@ class Webinar extends Model
 
     public function get()
     {
-        if ($this->userID != '') {
+        if (!is_null($this->userID)) {
             if (in_array('get', $this->methods)) {
                 $this->response = $this->client->get("users/{$this->userID}/" . $this->getEndPoint() . $this->getQueryString());
                 if ($this->response->getStatusCode() == 200) {
@@ -130,7 +130,7 @@ class Webinar extends Model
 
     public function all($fromPage = 1): Collection
     {
-        if ($this->userID != '') {
+        if (!is_null($this->userID)) {
             if (in_array('get', $this->methods)) {
                 $this->response = $this->client->get("users/{$this->userID}/" . $this->getEndPoint());
                 if ($this->response->getStatusCode() == 200) {

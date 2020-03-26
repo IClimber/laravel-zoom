@@ -11,25 +11,26 @@ class WebinarSetting extends Model
     const KEY_FIELD = 'host_video';
 
     protected $attributes = [
-        'host_video' => '', // boolean
-        'panelists_video' => '', // boolean
-        'practice_session' => '', // boolean
-        'hd_video' => '', // boolean
-        'approval_type' => '', // integer
-        'registration_type' => '', // integer
-        'audio' => '', // string
-        'auto_recording' => '', // string
-        'enforce_login' => '', // boolean
-        'enforce_login_domains' => '', // string
-        'alternative_hosts' => '', // string
-        'close_registration' => '', // boolean
-        'show_share_button' => '', // boolean
-        'allow_multiple_devices' => '', // boolean
-        'on_demand' => '', // boolean
-        'global_dial_in_countries' => '', // string
-        'contact_name' => '', // boolean
-        'contact_email' => '', // boolean
-        'registrants_confirmation_email' => '', //boolean
+        'host_video' => null, // boolean
+        'panelists_video' => null, // boolean
+        'practice_session' => null, // boolean
+        'hd_video' => null, // boolean
+        'approval_type' => null, // integer
+        'registration_type' => null, // integer
+        'audio' => null, // string
+        'auto_recording' => null, // string
+        'enforce_login' => null, // boolean
+        'enforce_login_domains' => null, // string
+        'alternative_hosts' => null, // string
+        'close_registration' => null, // boolean
+        'show_share_button' => null, // boolean
+        'allow_multiple_devices' => null, // boolean
+        'on_demand' => null, // boolean
+        'global_dial_in_countries' => null, // string
+        'contact_name' => null, // boolean
+        'contact_email' => null, // boolean
+        'registrants_confirmation_email' => null, //boolean
+        'registrants_email_notification' => null, //boolean
     ];
 
     protected $createAttributes = [
@@ -73,5 +74,6 @@ class WebinarSetting extends Model
         'contact_name',
         'contact_email',
         'registrants_confirmation_email',
+        'registrants_email_notification',
     ];
 }

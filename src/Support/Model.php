@@ -87,7 +87,7 @@ abstract class Model
     public function hasID()
     {
         $index = $this->getKey();
-        if ($this->$index != '') {
+        if (!is_null($this->$index)) {
             return true;
         }
 
@@ -437,7 +437,7 @@ abstract class Model
                 if (is_object($value)) {
                     $attributes[$key] = $value->createAttributes();
                 } else {
-                    if ($value != '') {
+                    if (!is_null($value)) {
                         $attributes[$key] = $value;
                     }
                 }
@@ -455,7 +455,7 @@ abstract class Model
                 if (is_object($value)) {
                     $attributes[$key] = $value->updateAttributes();
                 } else {
-                    if ($value != '') {
+                    if (!is_null($value)) {
                         $attributes[$key] = $value;
                     }
                 }
