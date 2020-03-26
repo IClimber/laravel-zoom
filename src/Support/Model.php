@@ -2,8 +2,8 @@
 
 namespace MacsiDigital\Zoom\Support;
 
-use Exception;
 use Illuminate\Support\Collection;
+use MacsiDigital\Zoom\Exceptions\RequestException;
 use MacsiDigital\Zoom\Facades\Zoom;
 use MacsiDigital\Zoom\Interfaces\Base;
 
@@ -101,12 +101,12 @@ abstract class Model
     /**
      * Get an attribute from the model.
      *
-     * @param  string  $key
+     * @param string $key
      * @return mixed
      */
     public function getAttribute($key)
     {
-        if (! $key) {
+        if (!$key) {
             return;
         }
         if ($this->attributeExists($key)) {
@@ -117,7 +117,7 @@ abstract class Model
     /**
      * Get a plain attribute (not a relationship).
      *
-     * @param  string  $key
+     * @param string $key
      * @return mixed
      */
     public function getAttributeValue($key)
@@ -128,7 +128,7 @@ abstract class Model
     /**
      * Get an attribute from the $attributes array.
      *
-     * @param  string  $key
+     * @param string $key
      * @return mixed
      */
     protected function getAttributeFromArray($key)
@@ -141,8 +141,8 @@ abstract class Model
     /**
      * Set a given attribute on the model.
      *
-     * @param  string  $key
-     * @param  mixed  $value
+     * @param string $key
+     * @param mixed $value
      * @return mixed
      */
     public function setAttribute($key, $value)
@@ -190,7 +190,7 @@ abstract class Model
     /**
      * Dynamically retrieve attributes on the model.
      *
-     * @param  string  $key
+     * @param string $key
      * @return mixed
      */
     public function __get($key)
@@ -201,8 +201,8 @@ abstract class Model
     /**
      * Dynamically set attributes on the model.
      *
-     * @param  string  $key
-     * @param  mixed  $value
+     * @param string $key
+     * @param mixed $value
      * @return void
      */
     public function __set($key, $value)
@@ -213,7 +213,7 @@ abstract class Model
     /**
      * Determine if an attribute or relation exists on the model.
      *
-     * @param  string  $key
+     * @param string $key
      * @return bool
      */
     public function __isset($key)
@@ -224,7 +224,7 @@ abstract class Model
     /**
      * Unset an attribute on the model.
      *
-     * @param  string  $key
+     * @param string $key
      * @return void
      */
     public function __unset($key)
@@ -269,21 +269,21 @@ abstract class Model
         if ($this->hasID()) {
             if (in_array('put', $this->methods) || in_array('patch', $this->methods)) {
                 $this->response = $this->response = $this->client->patch("{$this->getEndpoint()}/{$this->getID()}", $this->updateAttributes());
-                if ($this->response->getStatusCode() == '204') {
+                if ($this->response->getStatusCode() == 204) {
                     return $this;
                 } else {
-                    throw new Exception('Status Code '.$this->response->getStatusCode());
+                    throw new RequestException('Status Code ' . $this->response->getStatusCode());
                 }
             }
         } else {
             if (in_array('post', $this->methods)) {
                 $this->response = $this->client->post($this->getEndpoint(), $this->createAttributes());
-                if ($this->response->getStatusCode() == '201') {
+                if ($this->response->getStatusCode() == 201) {
                     $this->fill($this->response->getBody());
 
                     return $this;
                 } else {
-                    throw new Exception('Status Code '.$this->response->getStatusCode());
+                    throw new RequestException('Status Code ' . $this->response->getStatusCode());
                 }
             }
         }
@@ -312,7 +312,7 @@ abstract class Model
                 if ($i > 1) {
                     $query_string .= '&';
                 }
-                $query_string .= $query['key'].$query['operator'].urlencode($query['value']);
+                $query_string .= $query['key'] . $query['operator'] . urlencode($query['value']);
                 $i++;
             }
         }
@@ -328,11 +328,11 @@ abstract class Model
     public function get()
     {
         if (in_array('get', $this->methods)) {
-            $this->response = $this->client->get($this->getEndpoint().$this->getQueryString());
-            if ($this->response->getStatusCode() == '200') {
+            $this->response = $this->client->get($this->getEndpoint() . $this->getQueryString());
+            if ($this->response->getStatusCode() == 200) {
                 return $this->collect($this->response->getBody());
             } else {
-                throw new Exception('Status Code '.$this->response->getStatusCode());
+                throw new RequestException('Status Code ' . $this->response->getStatusCode());
             }
         }
     }
@@ -343,8 +343,8 @@ abstract class Model
             array_key_exists('limit', $this->queries)
                 ? $this->queries = array_replace_recursive($this->queries, ['limit' => ['key' => 'page_size']])
                 : $this->queries['page_number'] = ['key' => 'page_number', 'operator' => '=', 'value' => $fromPage];
-            $this->response = $this->client->get($this->getEndpoint().$this->getQueryString());
-            if ($this->response->getStatusCode() == '200') {
+            $this->response = $this->client->get($this->getEndpoint() . $this->getQueryString());
+            if ($this->response->getStatusCode() == 200) {
                 $res = $this->response->getBody();
                 if (array_key_exists('page_number', $this->queries)) {
                     if ($fromPage <= $res['page_count']) {
@@ -356,7 +356,7 @@ abstract class Model
 
                 return $this->collect($res);
             } else {
-                throw new Exception('Status Code '.$this->response->getStatusCode());
+                throw new RequestException('Status Code ' . $this->response->getStatusCode());
             }
         }
     }
@@ -364,11 +364,11 @@ abstract class Model
     public function find($id)
     {
         if (in_array('get', $this->methods)) {
-            $this->response = $this->client->get($this->getEndpoint().'/'.$id);
-            if ($this->response->getStatusCode() == '200') {
+            $this->response = $this->client->get($this->getEndpoint() . '/' . $id);
+            if ($this->response->getStatusCode() == 200) {
                 return $this->collect($this->response->getBody())->first();
             } else {
-                throw new Exception('Status Code '.$this->response->getStatusCode());
+                throw new RequestException('Status Code ' . $this->response->getStatusCode());
             }
         }
     }
@@ -379,11 +379,11 @@ abstract class Model
             $id = $this->getID();
         }
         if (in_array('delete', $this->methods)) {
-            $this->response = $this->client->delete($this->getEndpoint().'/'.$id);
-            if ($this->response->getStatusCode() == '204') {
+            $this->response = $this->client->delete($this->getEndpoint() . '/' . $id);
+            if ($this->response->getStatusCode() == 204) {
                 return $this->response->getStatusCode();
             } else {
-                throw new Exception('Status Code '.$this->response->getStatusCode());
+                throw new RequestException('Status Code ' . $this->response->getStatusCode());
             }
         }
     }

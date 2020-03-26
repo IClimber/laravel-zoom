@@ -4,6 +4,7 @@ namespace MacsiDigital\Zoom;
 
 use Exception;
 use Illuminate\Support\Collection;
+use MacsiDigital\Zoom\Exceptions\RequestException;
 use MacsiDigital\Zoom\Support\Model;
 
 class Registrant extends Model
@@ -94,10 +95,10 @@ class Registrant extends Model
     {
         if (in_array('get', $this->methods)) {
             $this->response = $this->client->get("{$this->type}/{$this->relationshipID}/{$this->getEndpoint()}{$this->getQueryString()}");
-            if ($this->response->getStatusCode() == '200') {
+            if ($this->response->getStatusCode() == 200) {
                 return $this->collect($this->response->getBody());
             } else {
-                throw new Exception($this->response->getStatusCode().' status code');
+                throw new RequestException($this->response->getStatusCode() . ' status code');
             }
         }
     }
@@ -116,21 +117,21 @@ class Registrant extends Model
         if ($this->hasID()) {
             if (in_array('put', $this->methods) || in_array('patch', $this->methods)) {
                 $this->response = $this->client->patch("{$this->type}/{$this->relationshipID}/{$this->getEndpoint()}", $this->updateAttributes());
-                if ($this->response->getStatusCode() == '204') {
+                if ($this->response->getStatusCode() == 204) {
                     return $this;
                 } else {
-                    throw new Exception($this->response->getStatusCode().' status code');
+                    throw new RequestException($this->response->getStatusCode() . ' status code');
                 }
             }
         } else {
             if (in_array('post', $this->methods)) {
                 $this->response = $this->client->post("{$this->type}/{$this->relationshipID}/{$this->getEndpoint()}", $this->createAttributes());
-                if ($this->response->getStatusCode() == '201') {
+                if ($this->response->getStatusCode() == 201) {
                     $this->fill($this->response->getBody());
 
                     return $this;
                 } else {
-                    throw new Exception($this->response->getStatusCode().' status code');
+                    throw new RequestException($this->response->getStatusCode() . ' status code');
                 }
             }
         }
@@ -144,30 +145,30 @@ class Registrant extends Model
     public function cancel()
     {
         $this->response = $this->client->put("/{$this->type}/{$this->relationshipID}/registrants/status", ['action' => 'cancel', 'registrant' => [['email' => $this->email]]]);
-        if ($this->response->getStatusCode() == '204') {
+        if ($this->response->getStatusCode() == 204) {
             return $this->response->getBody();
         } else {
-            throw new Exception($this->response->getStatusCode().' status code');
+            throw new RequestException($this->response->getStatusCode() . ' status code');
         }
     }
 
     public function deny()
     {
         $this->response = $this->client->put("/{$this->type}/{$this->relationshipID}/registrants/status", ['action' => 'deny', 'registrant' => [['email' => $this->email]]]);
-        if ($this->response->getStatusCode() == '204') {
+        if ($this->response->getStatusCode() == 204) {
             return $this->response->getBody();
         } else {
-            throw new Exception($this->response->getStatusCode().' status code');
+            throw new RequestException($this->response->getStatusCode() . ' status code');
         }
     }
 
     public function approve()
     {
         $this->response = $this->client->put("/{$this->type}/{$this->relationshipID}/registrants/status", ['action' => 'approve', 'registrant' => [['email' => $this->email]]]);
-        if ($this->response->getStatusCode() == '204') {
+        if ($this->response->getStatusCode() == 204) {
             return $this->response->getBody();
         } else {
-            throw new Exception($this->response->getStatusCode().' status code');
+            throw new RequestException($this->response->getStatusCode() . ' status code');
         }
     }
 }

@@ -48,7 +48,7 @@ class Zoom
 
     protected function getNode($key)
     {
-        $class = 'MacsiDigital\Zoom\\'.Str::studly($key);
+        $class = 'MacsiDigital\Zoom\\' . Str::studly($key);
         if (class_exists($class)) {
             return new $class($this->client);
         }

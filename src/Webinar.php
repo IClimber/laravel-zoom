@@ -4,6 +4,7 @@ namespace MacsiDigital\Zoom;
 
 use Exception;
 use Illuminate\Support\Collection;
+use MacsiDigital\Zoom\Exceptions\RequestException;
 use MacsiDigital\Zoom\Support\Model;
 
 class Webinar extends Model
@@ -115,15 +116,15 @@ class Webinar extends Model
     {
         if ($this->userID != '') {
             if (in_array('get', $this->methods)) {
-                $this->response = $this->client->get("users/{$this->userID}/".$this->getEndPoint().$this->getQueryString());
-                if ($this->response->getStatusCode() == '200') {
+                $this->response = $this->client->get("users/{$this->userID}/" . $this->getEndPoint() . $this->getQueryString());
+                if ($this->response->getStatusCode() == 200) {
                     return $this->collect($this->response->getBody());
                 } else {
-                    throw new Exception($this->response->getStatusCode().' status code');
+                    throw new RequestException($this->response->getStatusCode() . ' status code');
                 }
             }
         } else {
-            throw new Exception('No User to retreive Meetings');
+            throw new Exception('No User to retrieve Meetings');
         }
     }
 
@@ -131,15 +132,15 @@ class Webinar extends Model
     {
         if ($this->userID != '') {
             if (in_array('get', $this->methods)) {
-                $this->response = $this->client->get("users/{$this->userID}/".$this->getEndPoint());
-                if ($this->response->getStatusCode() == '200') {
+                $this->response = $this->client->get("users/{$this->userID}/" . $this->getEndPoint());
+                if ($this->response->getStatusCode() == 200) {
                     return $this->collect($this->response->getBody());
                 } else {
-                    throw new Exception($this->response->getStatusCode().' status code');
+                    throw new RequestException($this->response->getStatusCode() . ' status code');
                 }
             }
         } else {
-            throw new Exception('No User to retreive Meetings');
+            throw new Exception('No User to retrieve Meetings');
         }
     }
 
@@ -148,21 +149,21 @@ class Webinar extends Model
         if ($this->hasID()) {
             if (in_array('put', $this->methods) || in_array('patch', $this->methods)) {
                 $this->response = $this->client->patch("{$this->getEndpoint()}/{$this->getID()}", $this->updateAttributes());
-                if ($this->response->getStatusCode() == '204') {
+                if ($this->response->getStatusCode() == 204) {
                     return $this;
                 } else {
-                    throw new Exception($this->response->getStatusCode().' status code');
+                    throw new RequestException($this->response->getStatusCode() . ' status code');
                 }
             }
         } else {
             if (in_array('post', $this->methods)) {
                 $this->response = $this->client->post("users/{$this->userID}/{$this->getEndPoint()}", $this->createAttributes());
-                if ($this->response->getStatusCode() == '201') {
+                if ($this->response->getStatusCode() == 201) {
                     $this->fill($this->response->getBody());
 
                     return $this;
                 } else {
-                    throw new Exception($this->response->getStatusCode().' status code');
+                    throw new RequestException($this->response->getStatusCode() . ' status code');
                 }
             }
         }
@@ -188,50 +189,50 @@ class Webinar extends Model
     public function cancelRegistrant($registrant)
     {
         $this->response = $this->client->put("/webinars/{$this->getID()}/registrants/status", ['action' => 'cancel', 'registrant' => [['email' => $registrant->email]]]);
-        if ($this->response->getStatusCode() == '204') {
+        if ($this->response->getStatusCode() == 204) {
             return $this->response->getBody();
         } else {
-            throw new Exception($this->response->getStatusCode().' status code');
+            throw new RequestException($this->response->getStatusCode() . ' status code');
         }
     }
 
     public function denyRegistrant($registrant)
     {
         $this->response = $this->client->put("/webinars/{$this->getID()}/registrants/status", ['action' => 'deny', 'registrant' => [['email' => $registrant->email]]]);
-        if ($this->response->getStatusCode() == '204') {
+        if ($this->response->getStatusCode() == 204) {
             return $this->response->getBody();
         } else {
-            throw new Exception($this->response->getStatusCode().' status code');
+            throw new RequestException($this->response->getStatusCode() . ' status code');
         }
     }
 
     public function approveRegistrant($registrant)
     {
         $this->response = $this->client->put("/webinars/{$this->getID()}/registrants/status", ['action' => 'approve', 'registrant' => [['email' => $registrant->email]]]);
-        if ($this->response->getStatusCode() == '204') {
+        if ($this->response->getStatusCode() == 204) {
             return $this->response->getBody();
         } else {
-            throw new Exception($this->response->getStatusCode().' status code');
+            throw new RequestException($this->response->getStatusCode() . ' status code');
         }
     }
 
     public function deletePanelist($panelist)
     {
         $this->response = $this->client->delete("/webinars/{$this->getID()}/panelists/{$panelist->id}");
-        if ($this->response->getStatusCode() == '204') {
+        if ($this->response->getStatusCode() == 204) {
             return $this->response->getBody();
         } else {
-            throw new Exception($this->response->getStatusCode().' status code');
+            throw new RequestException($this->response->getStatusCode() . ' status code');
         }
     }
 
     public function deletePanelists()
     {
         $this->response = $this->client->delete("/webinars/{$this->getID()}/panelists");
-        if ($this->response->getStatusCode() == '204') {
+        if ($this->response->getStatusCode() == 204) {
             return $this->response->getBody();
         } else {
-            throw new Exception($this->response->getStatusCode().' status code');
+            throw new RequestException($this->response->getStatusCode() . ' status code');
         }
     }
 }

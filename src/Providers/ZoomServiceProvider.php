@@ -15,7 +15,7 @@ class ZoomServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__.'/../../config/config.php' => config_path('zoom.php'),
+                __DIR__ . '/../../config/config.php' => config_path('zoom.php'),
             ], 'config');
         }
     }
@@ -28,7 +28,7 @@ class ZoomServiceProvider extends ServiceProvider
     public function register()
     {
         // Automatically apply the package configuration
-        $this->mergeConfigFrom(__DIR__.'/../../config/config.php', 'zoom');
+        $this->mergeConfigFrom(__DIR__ . '/../../config/config.php', 'zoom');
 
         // Register the main class to use with the facade
         $this->app->singleton('zoom', 'MacsiDigital\Zoom\Zoom');
