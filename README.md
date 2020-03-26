@@ -117,8 +117,8 @@ There are also helper functions for adding sub objects
 
 ``` php
     $meeting = $zoom->meeting->find('000000000');
-    $recurrance = $zoom->recurrance->create(['fields' => 'values']);
-    $meeting->addRecurrance($recurrance);
+    $recurrence = $zoom->recurrence->create(['fields' => 'values']);
+    $meeting->addRecurrence($recurrence);
     $meeting->save();
 ```
 
@@ -137,8 +137,8 @@ Webinars
 But some also have sub cresources, like
 
 ```
-Recurrance
-Occurance
+Recurrence
+Occurrence
 Settings (for meetings and webinars)
 Tracking Fields
 ```

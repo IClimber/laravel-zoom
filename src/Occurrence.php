@@ -4,7 +4,7 @@ namespace MacsiDigital\Zoom;
 
 use MacsiDigital\Zoom\Support\Model;
 
-class Occurance extends Model
+class Occurrence extends Model
 {
     const KEY_FIELD = 'occurrence_id';
 

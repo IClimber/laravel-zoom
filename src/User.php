@@ -94,17 +94,17 @@ class User extends Model
         }
     }
 
-    public function meetings()
+    public function meetings(): Meeting
     {
-        $meeting = new \MacsiDigital\Zoom\Meeting;
+        $meeting = new Meeting($this->client);
         $meeting->setUserID($this->getID());
 
         return $meeting;
     }
 
-    public function webinars()
+    public function webinars(): Webinar
     {
-        $webinar = new \MacsiDigital\Zoom\Webinar;
+        $webinar = new Webinar($this->client);
         $webinar->setUserID($this->getID());
 
         return $webinar;

@@ -5,6 +5,7 @@ namespace MacsiDigital\Zoom\Support;
 use Exception;
 use Illuminate\Support\Collection;
 use MacsiDigital\Zoom\Facades\Zoom;
+use MacsiDigital\Zoom\Interfaces\Base;
 
 abstract class Model
 {
@@ -25,9 +26,9 @@ abstract class Model
 
     protected $client;
 
-    public function __construct()
+    public function __construct(Base $client = null)
     {
-        $this->client = Zoom::getClient();
+        $this->client = $client ?? Zoom::getClient();
     }
 
     /**
@@ -233,7 +234,7 @@ abstract class Model
 
     public function make($attributes)
     {
-        $model = new static;
+        $model = new static($this->client);
         $model->fill($attributes);
 
         return $model;
@@ -336,7 +337,7 @@ abstract class Model
         }
     }
 
-    public function all($fromPage = 1)
+    public function all($fromPage = 1): Collection
     {
         if (in_array('get', $this->methods)) {
             array_key_exists('limit', $this->queries)

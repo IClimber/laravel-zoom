@@ -3,6 +3,7 @@
 namespace MacsiDigital\Zoom;
 
 use Exception;
+use Illuminate\Support\Collection;
 use MacsiDigital\Zoom\Support\Model;
 
 class Webinar extends Model
@@ -59,9 +60,9 @@ class Webinar extends Model
 
     protected $relationships = [
         'settings' => '\MacsiDigital\Zoom\WebinarSetting',
-        'recurrance' => '\MacsiDigital\Zoom\Recurrance',
-        'occurances' => '\MacsiDigital\Zoom\Occurance',
-        'tracking_fields' => '\MacsiDigital\Zoom\TrackingFields',
+        'recurrence' => '\MacsiDigital\Zoom\Recurrence',
+        'occurrences' => '\MacsiDigital\Zoom\Occurrence',
+        'tracking_fields' => '\MacsiDigital\Zoom\TrackingField',
     ];
 
     public function addTrackingField(TrackingField $tracking_field)
@@ -71,9 +72,9 @@ class Webinar extends Model
         return $this;
     }
 
-    public function addRecurrance(Recurrance $recurance)
+    public function addRecurrence(Recurrence $recurrence)
     {
-        $this->attributes['recurrance'] = $recurance;
+        $this->attributes['recurrence'] = $recurrence;
 
         return $this;
     }
@@ -85,9 +86,9 @@ class Webinar extends Model
         return $this;
     }
 
-    public function addOccurence(Occurance $occurance)
+    public function addOccurrence(Occurrence $occurrence)
     {
-        $this->attributes['occurances'][] = $occurance;
+        $this->attributes['occurrences'][] = $occurrence;
 
         return $this;
     }
@@ -101,7 +102,7 @@ class Webinar extends Model
 
     public function make($attributes)
     {
-        $model = new static;
+        $model = new static($this->client);
         $model->fill($attributes);
         if (isset($this->userID)) {
             $model->setUserID($this->userID);
@@ -126,7 +127,7 @@ class Webinar extends Model
         }
     }
 
-    public function all()
+    public function all($fromPage = 1): Collection
     {
         if ($this->userID != '') {
             if (in_array('get', $this->methods)) {
@@ -169,7 +170,7 @@ class Webinar extends Model
 
     public function registrants()
     {
-        $registrant = new \MacsiDigital\Zoom\Registrant;
+        $registrant = new Registrant($this->client);
         $registrant->setType('webinars');
         $registrant->setRelationshipID($this->getID());
 
@@ -178,7 +179,7 @@ class Webinar extends Model
 
     public function panelists()
     {
-        $panelist = new \MacsiDigital\Zoom\Panelist;
+        $panelist = new Panelist($this->client);
         $panelist->setWebinarID($this->getID());
 
         return $panelist;

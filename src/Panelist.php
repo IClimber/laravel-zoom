@@ -38,7 +38,7 @@ class Panelist extends Model
 
     public function make($attributes)
     {
-        $model = new static;
+        $model = new static($this->client);
         $model->fill($attributes);
         if (isset($this->webinarID)) {
             $model->setwebinarID($this->webinarID);

@@ -5,28 +5,35 @@ namespace MacsiDigital\Zoom;
 use Exception;
 use Illuminate\Support\Str;
 use MacsiDigital\Zoom\Interfaces\PrivateApplication;
+use MacsiDigital\Zoom\Interfaces\PublicApplication;
 
+/**
+ * Class Zoom
+ * @package MacsiDigital\Zoom
+ *
+ * @property-read User $user
+ */
 class Zoom
 {
     protected $client;
 
-    public function __construct($type = 'Private', $token = null)
+    public function __construct(string $userToken = null)
     {
-        $function = 'boot'.ucfirst($type).'Application';
-        if (method_exists($this, $function)) {
-            if (ucfirst($type) == 'Public') {
-                $this->$function($token);
-            } else {
-                $this->$function();
-            }
+        if (is_null($userToken)) {
+            $this->bootPrivateApplication();
         } else {
-            throw new Exception('Application Interface type not known');
+            $this->bootPublicApplication($userToken);
         }
     }
 
-    public function bootPrivateApplication()
+    protected function bootPrivateApplication()
     {
         $this->client = (new PrivateApplication());
+    }
+
+    protected function bootPublicApplication(string $token)
+    {
+        $this->client = (new PublicApplication($token));
     }
 
     public function getClient()
@@ -39,11 +46,11 @@ class Zoom
         return $this->getNode($key);
     }
 
-    public function getNode($key)
+    protected function getNode($key)
     {
         $class = 'MacsiDigital\Zoom\\'.Str::studly($key);
         if (class_exists($class)) {
-            return new $class();
+            return new $class($this->client);
         }
         throw new Exception('Wrong method');
     }

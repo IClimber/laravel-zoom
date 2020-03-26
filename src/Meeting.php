@@ -3,6 +3,7 @@
 namespace MacsiDigital\Zoom;
 
 use Exception;
+use Illuminate\Support\Collection;
 use MacsiDigital\Zoom\Support\Model;
 
 class Meeting extends Model
@@ -68,8 +69,8 @@ class Meeting extends Model
 
     protected $relationships = [
         'settings' => '\MacsiDigital\Zoom\MeetingSetting',
-        'recurrance' => '\MacsiDigital\Zoom\Recurrance',
-        'tracking_fields' => '\MacsiDigital\Zoom\TrackingFields',
+        'recurrence' => '\MacsiDigital\Zoom\Recurrence',
+        'tracking_fields' => '\MacsiDigital\Zoom\TrackingField',
     ];
 
     public function addTrackingField(TrackingField $tracking_field)
@@ -79,9 +80,9 @@ class Meeting extends Model
         return $this;
     }
 
-    public function addRecurrance(Recurrance $recurance)
+    public function addRecurrence(Recurrence $recurrence)
     {
-        $this->attributes['recurrance'] = $recurance;
+        $this->attributes['recurrence'] = $recurrence;
 
         return $this;
     }
@@ -102,7 +103,7 @@ class Meeting extends Model
 
     public function make($attributes)
     {
-        $model = new static;
+        $model = new static($this->client);
         $model->fill($attributes);
         if (isset($this->userID)) {
             $model->setUserID($this->userID);
@@ -127,7 +128,7 @@ class Meeting extends Model
         }
     }
 
-    public function all()
+    public function all($fromPage = 1): Collection
     {
         if ($this->userID != '') {
             if (in_array('get', $this->methods)) {
@@ -170,7 +171,7 @@ class Meeting extends Model
 
     public function registrants()
     {
-        $registrant = new \MacsiDigital\Zoom\Registrant;
+        $registrant = new Registrant($this->client);
         $registrant->setType('meetings');
         $registrant->setRelationshipID($this->getID());
 

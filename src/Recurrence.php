@@ -4,7 +4,7 @@ namespace MacsiDigital\Zoom;
 
 use MacsiDigital\Zoom\Support\Model;
 
-class Recurrance extends Model
+class Recurrence extends Model
 {
     const KEY_FIELD = 'type';
 

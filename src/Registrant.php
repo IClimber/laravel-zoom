@@ -3,6 +3,7 @@
 namespace MacsiDigital\Zoom;
 
 use Exception;
+use Illuminate\Support\Collection;
 use MacsiDigital\Zoom\Support\Model;
 
 class Registrant extends Model
@@ -76,7 +77,7 @@ class Registrant extends Model
 
     public function make($attributes)
     {
-        $model = new static;
+        $model = new static($this->client);
         $model->fill($attributes);
         if (isset($this->type)) {
             $model->setType($this->type);
@@ -101,7 +102,7 @@ class Registrant extends Model
         }
     }
 
-    public function all()
+    public function all($fromPage = 1): Collection
     {
         if ($this->relationshipID != '') {
             return $this->collect($this->get("{$this->type}/{$this->relationshipID}/{$this->getEndpoint()}"));

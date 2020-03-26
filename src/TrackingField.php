@@ -4,7 +4,7 @@ namespace MacsiDigital\Zoom;
 
 use MacsiDigital\Zoom\Support\Model;
 
-class TrackingFields extends Model
+class TrackingField extends Model
 {
     public $response;
 
