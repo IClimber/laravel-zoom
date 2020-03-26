@@ -2,6 +2,7 @@
 
 namespace IClimber\Zoom\Support;
 
+use Exception;
 use Illuminate\Support\Collection;
 use IClimber\Zoom\Exceptions\RequestException;
 use IClimber\Zoom\Facades\Zoom;
@@ -225,7 +226,7 @@ abstract class Model
      * Unset an attribute on the model.
      *
      * @param string $key
-     * @return void
+     * @return Model
      */
     public function __unset($key)
     {
@@ -275,6 +276,8 @@ abstract class Model
                     throw new RequestException('Status Code ' . $this->response->getStatusCode());
                 }
             }
+
+            throw new Exception('Wrong method');
         } else {
             if (in_array('post', $this->methods)) {
                 $this->response = $this->client->post($this->getEndpoint(), $this->createAttributes());
@@ -286,6 +289,8 @@ abstract class Model
                     throw new RequestException('Status Code ' . $this->response->getStatusCode());
                 }
             }
+
+            throw new Exception('Wrong method');
         }
     }
 
@@ -335,6 +340,8 @@ abstract class Model
                 throw new RequestException('Status Code ' . $this->response->getStatusCode());
             }
         }
+
+        throw new Exception('Wrong method');
     }
 
     public function all($fromPage = 1): Collection
@@ -359,6 +366,8 @@ abstract class Model
                 throw new RequestException('Status Code ' . $this->response->getStatusCode());
             }
         }
+
+        throw new Exception('Wrong method');
     }
 
     public function find($id)
@@ -371,6 +380,8 @@ abstract class Model
                 throw new RequestException('Status Code ' . $this->response->getStatusCode());
             }
         }
+
+        throw new Exception('Wrong method');
     }
 
     public function delete($id = '')
@@ -386,6 +397,8 @@ abstract class Model
                 throw new RequestException('Status Code ' . $this->response->getStatusCode());
             }
         }
+
+        throw new Exception('Wrong method');
     }
 
     protected function collect($response)

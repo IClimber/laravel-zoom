@@ -3,10 +3,12 @@
 namespace IClimber\Zoom\Interfaces;
 
 use Exception;
+use IClimber\Zoom\Support\Request;
 use IClimber\Zoom\Support\Response;
 
 abstract class Base
 {
+    /* @var Request $request */
     protected $request;
 
     public function get($end_point)
