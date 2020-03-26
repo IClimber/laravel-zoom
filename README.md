@@ -94,7 +94,7 @@ Just like Laravel we can use the 'find' method to return a single matched result
 We can create and update records using the save function, below is the full save script for a creation.
 
 ``` php
-	$user = $zoom->user->create([
+    $user = $zoom->user->create([
         'name' => 'Test Name',
         'first_name' => 'First Name',
         'last_name' => 'Last Name',
@@ -102,10 +102,20 @@ We can create and update records using the save function, below is the full save
         'password' => 'secret',
         'type' => 1
     ]);
+
     $meeting = $user->meetings()->create([
     	'type' => '2',
-    	'start_time' => '2019-06-29T20:00:00Z'
+    	'start_time' => '2019-06-29T20:00:00Z',
+        'password' => '12345',
+        'settings' => [
+            'join_before_host' => true
+        ]
     ]);
+
+    $meeting->topic = 'Meeting name';
+    $meetings->password = '12345';
+    $meetings->save();
+
     $registrant = $meeting->registrants()->create([
     	'email' => 'registratn@domain.com',
     	'first_name' => 'Test',
