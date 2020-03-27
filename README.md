@@ -44,7 +44,12 @@ We use relationships so you will need to check the Zoom API, for example to get 
 So to get a list of meetings
 
 ``` php
+	//Use your JWT application credentials
 	$zoom = new \IClimber\Zoom\Zoom;
+    
+	//or use bearer token of any user from OAuth
+	$zoom = new \IClimber\Zoom\Zoom('eyJhbGc...');
+    
 	$meetings = $zoom->user->find('test@domain.com')->meetings()->all();
 ```
 
