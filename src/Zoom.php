@@ -3,9 +3,10 @@
 namespace IClimber\Zoom;
 
 use Exception;
-use Illuminate\Support\Str;
+use GuzzleHttp\Client;
 use IClimber\Zoom\Interfaces\PrivateApplication;
 use IClimber\Zoom\Interfaces\PublicApplication;
+use Illuminate\Support\Str;
 
 /**
  * Class Zoom
@@ -27,6 +28,29 @@ use IClimber\Zoom\Interfaces\PublicApplication;
 class Zoom
 {
     protected $client;
+
+    public static function getUserAccessData(string $code, string $redirect_uri, string $grant_type = 'authorization_code')
+    {
+        $options = [
+            'headers' => [
+                'Authorization' => 'Basic ' . base64_encode(config('zoom.client_id') . ':' . config('zoom.client_secret')),
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json',
+            ],
+        ];
+
+        $params = [
+            'grant_type' => $grant_type,
+            'code' => $code,
+            'redirect_uri' => $redirect_uri
+        ];
+
+        $response = (new Client($options))->post('https://zoom.us/oauth/token', [
+            'form_params' => $params
+        ]);
+
+        return $response->getBody()->getContents();
+    }
 
     public function __construct(string $userToken = null)
     {
