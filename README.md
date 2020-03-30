@@ -41,16 +41,44 @@ Unfortunately the Zoom API is not very uniform and is a bit all over the place, 
 
 We use relationships so you will need to check the Zoom API, for example to get a list of meetings or webinars you need to pass in a user id. WE use a little bit of relationship magic to acheive this in a more laravel type way.
 
-So to get a list of meetings
+If you want to work with JWT App
 
 ``` php
-	//Use your JWT application credentials
-	$zoom = new \IClimber\Zoom\Zoom;
-    
-	//or use bearer token of any user from OAuth
-	$zoom = new \IClimber\Zoom\Zoom('eyJhbGc...');
-    
-	$meetings = $zoom->user->find('test@domain.com')->meetings()->all();
+    $zoom = new \IClimber\Zoom\Zoom();
+```
+
+If you want to work with OAuth App
+
+``` php
+    //user bearer token
+    $zoom = new \IClimber\Zoom\Zoom('eyJhbGc...');
+```
+
+So to get a user info
+
+``` php
+    $userBearerToken = 'eyJhbGc...';
+    $zoom = new \IClimber\Zoom\Zoom($userBearerToken);
+
+    //for Account Level App or JWT
+    $user = $zoom->user->find('test@domain.com');
+    //or
+    $user = $zoom->user->first();
+
+    //for User Managed App
+    $user = $zoom->user->me();
+```
+
+To get a list of meetings
+
+``` php
+    $zoom = new \IClimber\Zoom\Zoom();
+
+    //for Account Level App or JWT
+    $meetings = $zoom->user->find('test@domain.com')->meetings()->all();
+
+    //for User Managed App use method "user->me()"
+    $meetings = $zoom->user->me()->meetings()->all();
 ```
 
 ## Find all
@@ -58,8 +86,8 @@ So to get a list of meetings
 The find all function returns a Laravel Collection so you can use all the Laravel Collection magic
 
 ``` php
-	$zoom = new \IClimber\Zoom\Zoom;
-	$users = $zoom->user->all();
+    $zoom = new \IClimber\Zoom\Zoom();
+    $users = $zoom->user->all();
 ```
 
 ## Filtered
@@ -67,21 +95,21 @@ The find all function returns a Laravel Collection so you can use all the Larave
 There are very few ocassions in the API where you can filter the results, but where you can you can use the where function.  Again check the API documentation for where you can add a query to the request.  To action you would do like so
 
 ``` php
-    $zoom = new \IClimber\Zoom\Zoom;
+    $zoom = new \IClimber\Zoom\Zoom();
     $thing = $zoom->thing->where('Name', '=', 'Test Name')->get();
 ```
 
 You can also just passs the name and value if it is to equal
 
 ``` php
-    $zoom = new \IClimber\Zoom\Zoom;
+    $zoom = new \IClimber\Zoom\Zoom();
     $thing = $zoom->thing->where('Name', 'Test Name')->get();
 ```
 
 To only get a single item use the 'first' method
 
 ``` php
-    $zoom = new \IClimber\Zoom\Zoom;
+    $zoom = new \IClimber\Zoom\Zoom();
     $thing = $zoom->thing->where('Name', 'Test Name')->first();
 ```
 
@@ -90,8 +118,8 @@ To only get a single item use the 'first' method
 Just like Laravel we can use the 'find' method to return a single matched result on the ID.  For users/registrants/panelists you can also use the email as well as the ID.
 
 ``` php
-	$zoom = new \IClimber\Zoom\Zoom;
-	$meeting = $zoom->meeting->find('000000000');
+    $zoom = new \IClimber\Zoom\Zoom();
+    $meeting = $zoom->meeting->find('000000000');
 ```
 
 ## Creating Items
@@ -109,8 +137,8 @@ We can create and update records using the save function, below is the full save
     ]);
 
     $meeting = $user->meetings()->create([
-    	'type' => '2',
-    	'start_time' => '2019-06-29T20:00:00Z',
+        'type' => '2',
+        'start_time' => '2019-06-29T20:00:00Z',
         'password' => '12345',
         'settings' => [
             'join_before_host' => true
@@ -122,9 +150,9 @@ We can create and update records using the save function, below is the full save
     $meetings->save();
 
     $registrant = $meeting->registrants()->create([
-    	'email' => 'registratn@domain.com',
-    	'first_name' => 'Test',
-    	'last_name' => 'Registrant'
+        'email' => 'registratn@domain.com',
+        'first_name' => 'Test',
+        'last_name' => 'Registrant'
     ]);
 ```
 

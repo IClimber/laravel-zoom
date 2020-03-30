@@ -10,6 +10,7 @@ class User extends Model
     const ENDPOINT = 'users';
     const NODE_NAME = 'user';
     const KEY_FIELD = 'id';
+    private $userManagedApp = false;
 
     protected $methods = ['get', 'post', 'patch', 'put', 'delete'];
 
@@ -68,11 +69,25 @@ class User extends Model
         'cms_user_id',
     ];
 
+    public function me()
+    {
+        $this->userManagedApp = false;
+        $this->response = $this->client->get($this->getEndpoint() . '/me');
+        if ($this->response->getStatusCode() == 200) {
+            $this->userManagedApp = true;
+            return $this->fill($this->response->getBody());
+        } else {
+            throw new RequestException('Status Code ' . $this->response->getStatusCode());
+        }
+
+        throw new Exception('Wrong method');
+    }
+
     public function save()
     {
         if ($this->hasID()) {
             if (in_array('put', $this->methods)) {
-                $this->response = $this->client->patch("{$this->getEndpoint()}/{$this->getID()}", $this->updateAttributes());
+                $this->response = $this->client->patch("{$this->getEndpoint()}/{$this->getUserId()}", $this->updateAttributes());
                 if ($this->response->getStatusCode() == 200) {
                     return $this;
                 } else {
@@ -94,10 +109,15 @@ class User extends Model
         }
     }
 
+    private function getUserId()
+    {
+        return $this->userManagedApp ? 'me' : $this->getId();
+    }
+
     public function meetings(): Meeting
     {
         $meeting = new Meeting($this->client);
-        $meeting->setUserID($this->getID());
+        $meeting->setUserID($this->getUserId());
 
         return $meeting;
     }
@@ -105,7 +125,7 @@ class User extends Model
     public function webinars(): Webinar
     {
         $webinar = new Webinar($this->client);
-        $webinar->setUserID($this->getID());
+        $webinar->setUserID($this->getUserId());
 
         return $webinar;
     }
