@@ -77,7 +77,7 @@ class User extends Model
             $this->userManagedApp = true;
             return $this->fill($this->response->getBody());
         } else {
-            throw new RequestException('Status Code ' . $this->response->getStatusCode());
+            throw $this->getExceptionByResponse($this->response);
         }
 
         throw new Exception('Wrong method');
@@ -91,7 +91,7 @@ class User extends Model
                 if ($this->response->getStatusCode() == 200) {
                     return $this;
                 } else {
-                    throw new RequestException($this->response->getStatusCode() . ' status code');
+                    throw $this->getExceptionByResponse($this->response);
                 }
             }
         } else {
@@ -103,7 +103,7 @@ class User extends Model
 
                     return $this;
                 } else {
-                    throw new RequestException($this->response->getStatusCode() . ' status code');
+                    throw $this->getExceptionByResponse($this->response);
                 }
             }
         }

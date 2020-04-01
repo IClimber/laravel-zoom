@@ -120,7 +120,7 @@ class Webinar extends Model
                 if ($this->response->getStatusCode() == 200) {
                     return $this->collect($this->response->getBody());
                 } else {
-                    throw new RequestException($this->response->getStatusCode() . ' status code');
+                    throw $this->getExceptionByResponse($this->response);
                 }
             }
         } else {
@@ -136,7 +136,7 @@ class Webinar extends Model
                 if ($this->response->getStatusCode() == 200) {
                     return $this->collect($this->response->getBody());
                 } else {
-                    throw new RequestException($this->response->getStatusCode() . ' status code');
+                    throw $this->getExceptionByResponse($this->response);
                 }
             }
         } else {
@@ -152,7 +152,7 @@ class Webinar extends Model
                 if ($this->response->getStatusCode() == 204) {
                     return $this;
                 } else {
-                    throw new RequestException($this->response->getStatusCode() . ' status code');
+                    throw $this->getExceptionByResponse($this->response);
                 }
             }
         } else {
@@ -163,7 +163,7 @@ class Webinar extends Model
 
                     return $this;
                 } else {
-                    throw new RequestException($this->response->getStatusCode() . ' status code');
+                    throw $this->getExceptionByResponse($this->response);
                 }
             }
         }
@@ -192,7 +192,7 @@ class Webinar extends Model
         if ($this->response->getStatusCode() == 204) {
             return $this->response->getBody();
         } else {
-            throw new RequestException($this->response->getStatusCode() . ' status code');
+            throw $this->getExceptionByResponse($this->response);
         }
     }
 
@@ -202,7 +202,7 @@ class Webinar extends Model
         if ($this->response->getStatusCode() == 204) {
             return $this->response->getBody();
         } else {
-            throw new RequestException($this->response->getStatusCode() . ' status code');
+            throw $this->getExceptionByResponse($this->response);
         }
     }
 
@@ -212,7 +212,7 @@ class Webinar extends Model
         if ($this->response->getStatusCode() == 204) {
             return $this->response->getBody();
         } else {
-            throw new RequestException($this->response->getStatusCode() . ' status code');
+            throw $this->getExceptionByResponse($this->response);
         }
     }
 
@@ -222,7 +222,7 @@ class Webinar extends Model
         if ($this->response->getStatusCode() == 204) {
             return $this->response->getBody();
         } else {
-            throw new RequestException($this->response->getStatusCode() . ' status code');
+            throw $this->getExceptionByResponse($this->response);
         }
     }
 
@@ -232,7 +232,7 @@ class Webinar extends Model
         if ($this->response->getStatusCode() == 204) {
             return $this->response->getBody();
         } else {
-            throw new RequestException($this->response->getStatusCode() . ' status code');
+            throw $this->getExceptionByResponse($this->response);
         }
     }
 }

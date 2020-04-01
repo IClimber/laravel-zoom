@@ -3,10 +3,12 @@
 namespace IClimber\Zoom\Support;
 
 use Exception;
-use Illuminate\Support\Collection;
+use IClimber\Zoom\Exceptions\ExpiredTokenException;
+use IClimber\Zoom\Exceptions\InvalidAccessTokenException;
 use IClimber\Zoom\Exceptions\RequestException;
 use IClimber\Zoom\Facades\Zoom;
 use IClimber\Zoom\Interfaces\Base;
+use Illuminate\Support\Collection;
 
 abstract class Model
 {
@@ -274,7 +276,7 @@ abstract class Model
                 if ($this->response->getStatusCode() == 204) {
                     return $this;
                 } else {
-                    throw new RequestException('Status Code ' . $this->response->getStatusCode());
+                    throw $this->getExceptionByResponse($this->response);
                 }
             }
 
@@ -287,7 +289,7 @@ abstract class Model
 
                     return $this;
                 } else {
-                    throw new RequestException('Status Code ' . $this->response->getStatusCode());
+                    throw $this->getExceptionByResponse($this->response);
                 }
             }
 
@@ -338,7 +340,7 @@ abstract class Model
             if ($this->response->getStatusCode() == 200) {
                 return $this->collect($this->response->getBody());
             } else {
-                throw new RequestException('Status Code ' . $this->response->getStatusCode());
+                throw $this->getExceptionByResponse($this->response);
             }
         }
 
@@ -364,7 +366,7 @@ abstract class Model
 
                 return $this->collect($res);
             } else {
-                throw new RequestException('Status Code ' . $this->response->getStatusCode());
+                throw $this->getExceptionByResponse($this->response);
             }
         }
 
@@ -378,7 +380,7 @@ abstract class Model
             if ($this->response->getStatusCode() == 200) {
                 return $this->collect($this->response->getBody())->first();
             } else {
-                throw new RequestException('Status Code ' . $this->response->getStatusCode());
+                throw $this->getExceptionByResponse($this->response);
             }
         }
 
@@ -395,7 +397,7 @@ abstract class Model
             if ($this->response->getStatusCode() == 204) {
                 return $this->response->getStatusCode();
             } else {
-                throw new RequestException('Status Code ' . $this->response->getStatusCode());
+                throw $this->getExceptionByResponse($this->response);
             }
         }
 
@@ -463,5 +465,19 @@ abstract class Model
         }
 
         return $attributes;
+    }
+
+    protected function getExceptionByResponse(Response $response)
+    {
+        $responseBody = $this->response->getBody();
+        if ($this->response->getStatusCode() == 401 && isset($responseBody['code']) && $responseBody['code'] == 124) {
+            if (strpos(strtolower($responseBody['message']), 'token is expired') !== false) {
+                return new ExpiredTokenException($responseBody['message'] ?? 'Access token is expired.');
+            } else {
+                return new InvalidAccessTokenException($responseBody['message'] ?? 'Invalid access token.');
+            }
+        }
+
+        return new RequestException($this->response->getStatusCode() . ' status code');
     }
 }
