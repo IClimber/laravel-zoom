@@ -31,6 +31,7 @@ use Illuminate\Support\Str;
 class Zoom
 {
     const TOKEN_ENDPOINT = 'https://zoom.us/oauth/token';
+    const REVOKE_TOKEN_ENDPOINT = 'https://zoom.us/oauth/revoke';
 
     protected $client;
 
@@ -97,6 +98,35 @@ class Zoom
         }
 
         return $response->getBody();
+    }
+
+    public static function revokeToken(string $token)
+    {
+        $options = [
+            'headers' => [
+                'Authorization' => 'Basic ' . base64_encode(config('zoom.client_id') . ':' . config('zoom.client_secret')),
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json',
+            ],
+        ];
+
+        $params = [
+            'token' => $token,
+        ];
+
+        try {
+            $response = new Response((new Client($options))->post(self::REVOKE_TOKEN_ENDPOINT, [
+                'form_params' => $params
+            ]));
+        } catch (Exception $exception) {
+            $response = new Response($exception->getResponse());
+        }
+
+        $successResponse = isset($response->getBody()['status']) ? $response->getBody()['status'] == 'success' : false;
+
+        if ($response->getStatusCode() != 200 || !$successResponse) {
+            throw new RequestException($response->getStatusCode() . ' status code');
+        }
     }
 
     public function __construct(string $userToken = null)

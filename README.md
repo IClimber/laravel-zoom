@@ -89,6 +89,9 @@ Get user access token
 
     //Refresh token
     $userAccessData = Zoom::refreshToken('eyJhbGc...');
+
+    //Revoke token
+    Zoom::revokeToken('eyJhbGc...');
 ```
 
 ## Find all
