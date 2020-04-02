@@ -81,6 +81,16 @@ To get a list of meetings
     $meetings = $zoom->user->me()->meetings()->all();
 ```
 
+Get user access token 
+
+``` php
+    //Get access and refresh token by user authorization code
+    $userAccessData = Zoom::getUserAccessData('obBEe8ewaL_KdYKjnimT4KPd8KKdQt9FQ', 'my redirect url');
+
+    //Refresh token
+    $userAccessData = Zoom::refreshToken('eyJhbGc...');
+```
+
 ## Find all
 
 The find all function returns a Laravel Collection so you can use all the Laravel Collection magic
