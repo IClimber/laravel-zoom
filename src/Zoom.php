@@ -92,6 +92,10 @@ class Zoom
             throw new InvalidAccessTokenException($response->getBody()['reason'] ?? 'Invalid Token!');
         }
 
+        if ($response->getStatusCode() != 200) {
+            throw new RequestException($response->getStatusCode() . ' status code');
+        }
+
         return $response->getBody();
     }
 
